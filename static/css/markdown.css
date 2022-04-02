@@ -1,0 +1,112 @@
+/*
+Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.md or http://ckeditor.com/license
+*/
+
+post_markdown {
+
+}
+
+post_markdown .cke_editable
+{
+	font-size: 13px;
+	line-height: 1.6;
+
+	/* Fix for missing scrollbars with RTL texts. (#10488) */
+	word-wrap: break-word;
+}
+
+blockquote
+{
+	font-style: italic;
+	padding-left: 2px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin: 2px;
+	border-style: solid;
+	border-left-color: #ccc;
+	border-left-width: 5px;
+}
+
+post_markdown a
+{
+	color: #0782C1;
+}
+
+post_markdown ol,post_markdown ul,post_markdown dl
+{
+	/* IE7: reset rtl list margin. (#7334) */
+	*margin-right: 0px;
+	/* preserved spaces for list items with text direction other than the list. (#6249,#8049)*/
+	padding: 0 40px;
+}
+
+post_markdown h1,post_markdown h2,post_markdown h3,post_markdown h4,post_markdown h5,post_markdown h6
+{
+	font-weight: normal;
+	line-height: 1.2;
+}
+
+post_markdown hr
+{
+	border: 0px;
+	border-top: 1px solid #ccc;
+}
+
+post_markdown img.right
+{
+	border: 1px solid #ccc;
+	float: right;
+	margin-left: 15px;
+	padding: 5px;
+}
+
+post_markdown img.left
+{
+	border: 1px solid #ccc;
+	float: left;
+	margin-right: 15px;
+	padding: 5px;
+}
+
+post_markdown pre
+{
+	white-space: pre-wrap; /* CSS 2.1 */
+	word-wrap: break-word; /* IE7 */
+	-moz-tab-size: 4;
+	tab-size: 4;
+}
+
+post_markdown .marker
+{
+	background-color: Yellow;
+}
+
+post_markdown span[lang]
+{
+	font-style: italic;
+}
+
+post_markdown figure
+{
+	text-align: center;
+	border: solid 1px #ccc;
+	border-radius: 2px;
+	background: rgba(0,0,0,0.05);
+	padding: 10px;
+	margin: 10px 20px;
+	display: inline-block;
+}
+
+post_markdown figure > post_markdown figcaption
+{
+	text-align: center;
+	display: block; /* For IE8 */
+}
+
+post_markdown a > post_markdown img {
+	padding: 1px;
+	margin: 1px;
+	border: none;
+	outline: 1px solid #0782C1;
+}

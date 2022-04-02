@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block nav %}
+<li><a href="/">Forums</a></li>
+<li class="uk-disabled"><a>Sign In</a></li>
+{% endblock nav %}
+
+{% block content %}
+<form method="post" action="/user/login">
+	{% include "components/signin-card.html" %}
+</form>
+{% endblock content %}

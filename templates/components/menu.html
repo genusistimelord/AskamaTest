@@ -1,0 +1,35 @@
+<!--
+ This Source Code Form is subject to the terms of the Mozilla Public
+ License, v. 2.0. If a copy of the MPL was not distributed with this
+ file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+ Author(s):
+  - Andrew Wheeler <lordsatin@hotmail.com>
+  - Alex Lopez  <kasvaca@gmail.com>
+-->
+<div class="uk-section-secondary uk-padding-small">
+  <ul class="uk-subnav uk-subnav-divider">
+    <li>
+      {% if current_user.is_anonymous() %}
+      Hello There,&nbsp;<b>Guest!</b>
+      {% else %}
+      Welcome,&nbsp;<b>{{current_user.display}}!</b>
+      {% endif %}
+    </li>
+
+    <li><a href="/">Home</a></li>
+
+    {% if current_user.is_anonymous() %}
+    <li><a href="/user/login/">Login</a></li>
+    {% endif %}
+
+    {% if !current_user.is_anonymous() %}
+    <li><a href="/user/logout/">Sign out</a></li>
+    {% endif %}
+
+    {% if current_user.check_rights(["admin:view".to_string()]) %}
+    <li><a href="/admin/info/">Admin Panel</a></li>
+    {% endif %}
+
+  </ul>
+</div>

@@ -1,0 +1,167 @@
+.container.centered {
+	margin: 0 auto;
+}
+
+.container {
+	display: block;
+	width: 320px;
+	max-width: 1280px;
+}
+
+@media (min-width: 680px) {
+	.container {
+		width: 640px;
+	}
+}
+
+@media (min-width: 1000px) {
+	.container {
+		width: 960px;
+	}
+}
+
+@media (min-width: 1320px) {
+	.container {
+		width: 1280px;
+	}
+}
+
+.container.max-width-960 {
+	max-width: 960px;
+}
+
+.container.max-width-480 {
+	max-width: 480px;
+}
+
+.full-width,
+.grid {
+	width: 100%;
+}
+
+.grid:after,
+.row:after,
+.collection:after,
+.collection li:after {
+	clear: both;
+	content: "";
+	display: table;
+}
+
+.pull-left,
+.grid [class*='col-'] {
+	float: left;
+}
+
+.pull-right {
+	float: right;
+}
+
+.pull-left:last-of-type,
+.pull-right:last-of-type {
+	margin-bottom: 0;
+}
+
+.grid [class*='col-'] {
+	float: left;
+	width: 100%;
+}
+
+@media (min-width: 680px) {
+	.grid .col-1-16 {
+		width: 6.25%;
+	}
+
+	.grid .col-1-8,
+	.grid .col-2-16 {
+		width: 12.5%;
+	}
+
+	.grid .col-3-16 {
+		width: 18.75%;
+	}
+
+	.grid .col-1-5 {
+		width: 20%;
+	}
+
+	.grid .col-1-4,
+	.grid .col-2-8,
+	.grid .col-3-12,
+	.grid .col-4-16 {
+		width: 25%;
+	}
+
+	.grid .col-30 {
+		width: 30%;
+	}
+
+	.grid .col-1-2,
+	.grid .col-2-4,
+	.grid .col-4-8,
+	.grid .col-6-12,
+	.grid .col-8-16 {
+		width: 50%;
+	}
+
+	.grid .col-3-4,
+	.grid .col-6-8,
+	.grid .col-9-12,
+	.grid .col-12-16 {
+		width: 75%;
+	}
+
+	.grid .col-4-5 {
+		width: 80%;
+	}
+
+	.grid .col-13-16 {
+		width: 81.25%;
+	}
+
+	.grid .col-7-8,
+	.grid .col-14-16 {
+		width: 87.5%;
+	}
+
+	.grid .row,
+	.grid .col-1-1,
+	.grid .col-2-2,
+	.grid .col-4-4,
+	.grid .col-8-8,
+	.grid .col-12-12,
+	.grid .col-16-16 {
+		width: 100%;
+	}
+}
+
+.grid .row:after {
+	clear: both;
+	content: "";
+	display: table;
+}
+
+.gutter [class*='col-'] {
+	box-sizing: border-box;
+	padding: .5rem;
+}
+
+.gutter [class*='col-']:first-of-type {
+	padding-left: 0;
+}
+
+.gutter [class*='col-']:last-of-type {
+	padding-right: 0;
+}
+
+.gutter > .pull-right {
+	margin-left: 1rem;
+}
+
+.gutter > div {
+	margin-bottom: 1rem;
+}
+
+.gutter > div:last-child {
+	margin-bottom: 0;
+}

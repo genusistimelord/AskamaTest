@@ -1,0 +1,24 @@
+<!--
+ This Source Code Form is subject to the terms of the Mozilla Public
+ License, v. 2.0. If a copy of the MPL was not distributed with this
+ file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+ Author(s):
+  - Andrew Wheeler <lordsatin@hotmail.com>
+  - Alex Lopez  <kasvaca@gmail.com>
+-->
+{% extends 'base.htm' %}
+
+{% from 'form_utils.htm' import render_field, render_pagination %}
+{% from 'form_utils.htm' import messagebox %}
+
+{% block nav %}
+	<li><a href="{{ url_for('main.view_main') }}">Forums</a></li>
+	<li class="uk-disabled"><a>User List</a></li>
+{% endblock %}
+
+{% block content %}
+	<div>
+		{% include "components/user-list-card.html" %}
+	</div>
+{% endblock %}

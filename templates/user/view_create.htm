@@ -1,0 +1,30 @@
+<!--
+ This Source Code Form is subject to the terms of the Mozilla Public
+ License, v. 2.0. If a copy of the MPL was not distributed with this
+ file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+ Author(s):
+  - Andrew Wheeler <lordsatin@hotmail.com>
+  - Alex Lopez  <kasvaca@gmail.com>
+-->
+{% extends 'base.htm' %}
+
+{% from 'form_utils.htm' import render_field, field_errors %}
+
+{% block header %}
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/lists.css') }}" />
+{% endblock %}
+
+{% block content %}
+	<form method="POST">
+		<div uk-grid>
+			<div class="uk-width-expand">
+				{% include "components/user-edit-view-card.html" %}
+			</div>
+		</div>
+	</form>
+{% endblock %}
+
+{% block end %}
+	{% include "components/select_javascript.html" %}
+{% endblock %}

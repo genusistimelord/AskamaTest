@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block header %}
+<style>
+	#icons {
+		width: 120px;
+		height: 120px;
+	}
+
+	#icon_middle {
+		font-size: 55px;
+	}
+
+	.middle_but {
+		padding-top: 8px;
+	}
+
+	.middle_text {
+		text-align: center;
+		white-space: nowrap;
+		margin-top: -6px;
+	}
+
+	.adjust1 {
+		margin-left: -15px;
+	}
+</style>
+{% endblock header %}
+
+{% block nav %}
+<li class="uk-disabled"><a>Main Page</a></li>
+{% endblock nav %}
+
+{% block content %}
+<div class="uk-card uk-card-default">
+	<div class="uk-card-header">
+		<span class="uk-card-title">
+			Menu
+		</span>
+	</div>
+	<div class="uk-card-body">
+		<div class="uk-flex-center uk-child-width-1-6 uk-grid-small " uk-grid>
+			{% if !current_user.is_anonymous() %}
+
+			<div>
+				<a id="icons" href="user/views/" class="uk-button uk-button-primary">
+					<div class="middle_but">
+						<i id="icon_middle" class="material-icons">art_track</i>
+						<div class='middle_text'>Views</div>
+					</div>
+				</a>
+			</div>
+
+			<div>
+				<a id="icons" href="/user/reports/" class="uk-button uk-button-primary">
+					<div class="middle_but">
+						<i id="icon_middle" class="material-icons">receipt</i>
+						<div class='middle_text adjust1'>Run Reports</div>
+					</div>
+				</a>
+			</div>
+			{% if current_user.check_rights(["admin:view".to_string()]) %}
+			<div>
+				<a id="icons" href="/admin/info/" class="uk-button uk-button-primary">
+					<div class="middle_but">
+						<i id="icon_middle" class="material-icons">settings</i>
+					</div>
+					<div class='middle_text adjust1'>Admin Panel</div>
+				</a>
+			</div>
+			{% endif %}
+			<div>
+				<a id="icons" href="/user/logout/" class="uk-button uk-button-primary">
+					<div class="middle_but">
+						<i id="icon_middle" class="material-icons">exit_to_app</i>
+						<div class='uk-text-center middle_text'>Sign Out</div>
+					</div>
+				</a>
+			</div>
+			{% else %}
+			<div>
+				<a id="icons" href="/user/login" class="uk-button uk-button-primary">
+					<div class="middle_but">
+						<i id="icon_middle" class="material-icons">fingerprint</i>
+						<div class='middle_text'>Login</div>
+					</div>
+				</a>
+			</div>
+			{% endif %}
+		</div>
+	</div>
+</div>
+<div class="uk-margin-large-top">
+	{% include "components/who-is-online-card.html" %}
+</div>
+{% endblock content %}

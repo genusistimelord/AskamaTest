@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<title>StructureTec</title>
+	<link rel="stylesheet" type="text/css" href="/static/css/font-awesome.min.css" />
+	<link rel="stylesheet" type="text/css" href="/static/css/uikit.css" />
+	<link rel="stylesheet" type="text/css" href="/static/css/main.css" />
+	<link rel="stylesheet" type="text/css" href="/static/css/grid.css" />
+	<link rel="stylesheet" type="text/css" href="/static/css/ui.css" />
+	<link rel="stylesheet" type="text/css" href="/static/css/markdown.css" />
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<script type="text/javascript" src="/static/uikit/js/uikit.min.js"></script>
+	<script type="text/javascript" src="/static/uikit/js/uikit-icons.min.js"></script>
+	<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png">
+	<link rel="manifest" href="/static/site.webmanifest">
+	<link rel="mask-icon" href="/static/safari-pinned-tab.svg" color="#5bbad5">
+	<link rel="shortcut icon" href="/static/favicon.ico">
+	<meta name="msapplication-TileColor" content="#da532c">
+	<meta name="msapplication-config" content="/static/browserconfig.xml">
+	<meta name="theme-color" content="#ffffff">
+
+	{% block header %}
+	{% endblock header %}
+</head>
+
+<body>
+	<div class="content-container uk-section-muted">
+		{% include "components/header.html" %}
+		{% include "components/menu.html" %}
+		<div class="uk-container uk-container-large content">
+			<ul class="uk-breadcrumb uk-padding-small uk-padding-remove-left">
+				{% block nav %}
+				{% endblock nav %}
+			</ul>
+
+			<div id="messagetop">
+				{% if !flashes.store.is_empty() %}
+
+				{% for (level, msg) in flashes.store %}
+				<div class="uk-alert {{ level|lower }}">
+					{{ msg|lower }}
+				</div>
+				{% endfor %}
+
+				{% if flashes.error_count > 0 %}
+				<div class="uk-alert error">
+					{{ flashes.error_count }} field(s) have errors
+				</div>
+				{% endif %}
+				{% endif %}
+
+				{% block messagetop %}
+				{% endblock messagetop %}
+			</div>
+
+			<div id="main_content">
+				<div class="uk-padding uk-padding-remove-left uk-padding-remove-right uk-padding-remove-top">
+					{% block content %}
+					{% endblock content %}
+				</div>
+			</div>
+
+			<div id="messagebottom" style="padding-bottom: 10px;">
+				{% block messagebottom %}
+				{% endblock messagebottom %}
+
+				{% if !flashes.store.is_empty() %}
+
+				{% for (level, msg) in flashes.store %}
+				<div class="uk-alert {{ level|lower }}">
+					{{ msg|lower }}
+				</div>
+				{% endfor %}
+
+				{% if flashes.error_count > 0 %}
+				<div class="uk-alert error">
+					{{ flashes.error_count }} field(s) have errors
+				</div>
+				{% endif %}
+				{% endif %}
+			</div>
+		</div>
+		<footer class="uk-position-bottom uk-section-primary uk-padding-small">
+			<div class="par">&copy; 2022 Structuretec</div>
+			<div class="par">Powered By AcForum</div>
+		</footer>
+	</div>
+	{% block end %}
+	{% endblock end %}
+</body>
+
+</html>

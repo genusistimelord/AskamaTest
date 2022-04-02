@@ -1,0 +1,35 @@
+.highlight-container, .highlight {
+	color: #000;
+	background: #eee;
+}
+
+.linenodiv {
+	color: #889999;
+	background: #063642;
+}
+
+.highlight .c, .highlight .cm, .highlight .c1 {
+	color: #667777;
+}
+
+.highlight .cp {
+	color: #ff3388;
+	font-weight: bold;
+}
+
+.highlight .k, .highlight .kt {
+	color: #99cc00;
+}
+
+.highlight .m, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .mo {
+	color: #66aaff;
+}
+
+.highlight .s {
+	color: #ffaa44;
+}
+
+.highlight .sc, .highlight .se {
+	color: #ff5522;
+}
+
