@@ -4,8 +4,7 @@ use crate::{
     forms::UserOnlineDisplay,
 };
 //use askama::Template;
-use askama_derive::*;
-use askama_shared::Template;
+use askama::Template;
 use axum::{
     response::{IntoResponse, Response},
     routing::get,
@@ -24,22 +23,6 @@ struct MainTemplate {
     online: Vec<UserOnlineDisplay>,
     #[serde(default)]
     flashes: Flashes,
-}
-
-impl IntoResponse for MainTemplate {
-    fn into_response(self) -> Response {
-        match self.render() {
-            Ok(body) => {
-                let headers = [(
-                    http::header::CONTENT_TYPE,
-                    http::HeaderValue::from_static(Self::MIME_TYPE),
-                )];
-
-                (headers, body).into_response()
-            }
-            Err(_) => http::StatusCode::INTERNAL_SERVER_ERROR.into_response(),
-        }
-    }
 }
 
 pub fn main_routes() -> Router {
