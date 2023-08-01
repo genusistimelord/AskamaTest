@@ -1,24 +1,84 @@
-<!--
- This Source Code Form is subject to the terms of the Mozilla Public
- License, v. 2.0. If a copy of the MPL was not distributed with this
- file, You can obtain one at http://mozilla.org/MPL/2.0/.
-
- Author(s):
-  - Andrew Wheeler <lordsatin@hotmail.com>
-  - Alex Lopez  <kasvaca@gmail.com>
--->
-{% extends 'base.htm' %}
-
-{% from 'form_utils.htm' import render_field, render_pagination %}
-{% from 'form_utils.htm' import messagebox %}
+{% extends "base.html" %}
 
 {% block nav %}
-	<li><a href="{{ url_for('main.view_main') }}">Forums</a></li>
-	<li class="uk-disabled"><a>User List</a></li>
-{% endblock %}
+<li><a href="/">Forums</a></li>
+<li class="uk-disabled"><a>User List</a></li>
+{% endblock nav %}
 
 {% block content %}
+<form method="post" action="/user/users">
 	<div>
-		{% include "components/user-list-card.html" %}
+		<div class="uk-card uk-card-default">
+			<div class="uk-card-header">
+				<span class="uk-card-title">
+					Users
+				</span>
+			</div>
+			<div class="uk-card-body">
+				{% if !users.is_empty() %}
+				<table class="uk-table uk-table-small uk-table-hover uk-table-striped">
+					<thead>
+						<tr>
+							<th>Avatar</th>
+							<th>Display name</th>
+							<th>First name</th>
+							<th>Last name</th>
+							<th>Selection</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for user in users %}
+
+						<tr>
+							<td> <img src="{{ user.get_gravatar(50) }}" /> </td>
+							<td>{{ user.display }}</td>
+							<td>{{ user.first_name }}</td>
+							<td>{{ user.last_name }}</td>
+							<td><label for="selected-{{loop.index0}}">
+									<input class="uk-checkbox" id="selected-{{loop.index0}}" name="selected"
+										type="checkbox" value={{user.id}}>
+								</label></td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				{% else %}
+				<p> Nothing Here!, No users have been created yet.</p>
+				{% endif %}
+				<div class="uk-card-footer">
+					<div class="uk-align-left">
+					{% if !users.is_empty() %}
+					<ul class="uk-pagination">
+						{% if let Some(prev) = pages.prev %}
+						<li><a href="/user/users?&page={{ prev }}&per_page={{ per_page }}">Prev</a></li>
+						{% endif %}
+
+						{% for option in pages.pages %}
+						{% if let Some(num) = option %}
+						{% if crate::extensions::check_page(page, num) %}
+						<div><strong>{{ page }}</strong></div>
+						{% else %}
+						<li><a href="/user/users?&page={{ num }}&per_page={{ per_page }}">{{ num }}</a></li>
+						{% endif %}
+						{% else %}
+						<li><span>…</span></li>
+						{% endif %}
+						{% endfor %}
+
+						{% if let Some(next) = pages.next %}
+						<li><a href="/user/users?&page={{ next }}&per_page={{ per_page }}">Next</a></li>
+						{% endif %}
+					</ul>
+					{% endif %}
+					</div>
+				</div>
+
+				<div class="uk-align-right uk-inline">
+					<input class="uk-button uk-button-primary
+							uk-align-right" type="submit" value="Select" tabindex="4" />
+				</div>
+			</div>
+		</div>
 	</div>
-{% endblock %}
+</form>
+{% endblock content %}

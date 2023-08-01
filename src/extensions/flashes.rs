@@ -1,9 +1,5 @@
 use async_trait::async_trait;
-use axum::{
-    extract::{FromRequest, RequestParts},
-    http::StatusCode,
-    BoxError,
-};
+use axum::{extract::FromRequestParts, http::request::Parts};
 use axum_flash::{IncomingFlashes, Level};
 use serde::*;
 
@@ -19,8 +15,8 @@ pub fn level_to_string(level: &Level) -> String {
 
 #[derive(Default, Clone, Debug, Deserialize, Serialize)]
 pub struct Flashes {
-    pub store: Vec<(String, String)>,
     pub error_count: usize,
+    pub store: Vec<(String, String)>,
 }
 
 impl Flashes {
@@ -53,7 +49,7 @@ impl Flashes {
     #[allow(dead_code)]
     pub fn contains(&self, msg: String) -> bool {
         self.store.iter().any(|v| {
-            v.0.contains("error") && v.1.to_lowercase().contains(&msg.to_lowercase().trim())
+            v.0.contains("error") && v.1.to_lowercase().contains(msg.to_lowercase().trim())
         })
     }
 
@@ -62,7 +58,7 @@ impl Flashes {
         self.store
             .iter()
             .filter(|v| {
-                v.0.contains("error") && v.1.to_lowercase().contains(&msg.to_lowercase().trim())
+                v.0.contains("error") && v.1.to_lowercase().contains(msg.to_lowercase().trim())
             })
             .cloned()
             .collect()
@@ -70,20 +66,19 @@ impl Flashes {
 }
 
 #[async_trait]
-impl<B> FromRequest<B> for Flashes
+impl<S> FromRequestParts<S> for Flashes
 where
-    B: http_body::Body + Send,
-    B::Data: Send,
-    B::Error: Into<BoxError>,
+    S: Send + Sync,
+    axum_flash::Config: axum::extract::FromRef<S>,
 {
-    type Rejection = (StatusCode, &'static str);
+    type Rejection = (http::StatusCode, &'static str);
 
-    async fn from_request(req: &mut RequestParts<B>) -> Result<Self, Self::Rejection> {
-        let incoming_flashes = IncomingFlashes::from_request(req).await?;
+    async fn from_request_parts(parts: &mut Parts, state: &S) -> Result<Self, Self::Rejection> {
+        let incoming_flashes = IncomingFlashes::from_request_parts(parts, state).await?;
 
         let store: Vec<(String, String)> = incoming_flashes
             .iter()
-            .map(|(x, y)| (level_to_string(&x), y.to_string()))
+            .map(|(x, y)| (level_to_string(&x), y.to_owned()))
             .collect();
         let error_count = store
             .iter()

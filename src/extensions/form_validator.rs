@@ -1,34 +1,10 @@
-use async_trait::async_trait;
 use axum::{
     body::BoxBody,
-    extract::{Form, FromRequest, RequestParts},
     http::{Response, StatusCode},
     response::IntoResponse,
-    BoxError,
 };
-use serde::de::DeserializeOwned;
+use axum_session::SessionError;
 use thiserror::Error;
-use validator::Validate;
-
-#[derive(Debug, Clone, Copy, Default)]
-pub struct ValidatedForm<T>(pub T);
-
-#[async_trait]
-impl<T, B> FromRequest<B> for ValidatedForm<T>
-where
-    T: DeserializeOwned + Validate,
-    B: http_body::Body + Send,
-    B::Data: Send,
-    B::Error: Into<BoxError>,
-{
-    type Rejection = ServerError;
-
-    async fn from_request(req: &mut RequestParts<B>) -> Result<Self, Self::Rejection> {
-        let Form(value) = Form::<T>::from_request(req).await?;
-        value.validate()?;
-        Ok(ValidatedForm(value))
-    }
-}
 
 #[derive(Debug, Error)]
 pub enum ServerError {
@@ -43,6 +19,27 @@ pub enum ServerError {
 
     #[error(transparent)]
     AskamaError(#[from] askama::Error),
+
+    #[error(transparent)]
+    IO(#[from] std::io::Error),
+
+    #[error(transparent)]
+    Format(#[from] std::fmt::Error),
+
+    #[error(transparent)]
+    SerdeJson(#[from] serde_json::error::Error),
+
+    #[error(transparent)]
+    Session(#[from] SessionError),
+
+    #[error(transparent)]
+    TokioJoin(#[from] tokio::task::JoinError),
+
+    #[error(transparent)]
+    UTF8(#[from] std::str::Utf8Error),
+
+    #[error(transparent)]
+    FutureSpawn(#[from] futures::task::SpawnError),
 }
 
 impl IntoResponse for ServerError {
@@ -53,8 +50,7 @@ impl IntoResponse for ServerError {
                 (StatusCode::BAD_REQUEST, message)
             }
             ServerError::AxumFormRejection(_) => (StatusCode::BAD_REQUEST, self.to_string()),
-            ServerError::SqlxErrors(_) => (StatusCode::INTERNAL_SERVER_ERROR, self.to_string()),
-            ServerError::AskamaError(_) => (StatusCode::INTERNAL_SERVER_ERROR, self.to_string()),
+            _ => (StatusCode::INTERNAL_SERVER_ERROR, self.to_string()),
         }
         .into_response()
     }

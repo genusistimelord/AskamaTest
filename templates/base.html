@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="UTF-8" />
-	<title>StructureTec</title>
+	<title>Test Site</title>
 	<link rel="stylesheet" type="text/css" href="/static/css/font-awesome.min.css" />
 	<link rel="stylesheet" type="text/css" href="/static/css/uikit.css" />
 	<link rel="stylesheet" type="text/css" href="/static/css/main.css" />
@@ -42,7 +42,7 @@
 
 				{% for (level, msg) in flashes.store %}
 				<div class="uk-alert {{ level|lower }}">
-					{{ msg|lower }}
+					{{ msg }}
 				</div>
 				{% endfor %}
 
@@ -72,7 +72,7 @@
 
 				{% for (level, msg) in flashes.store %}
 				<div class="uk-alert {{ level|lower }}">
-					{{ msg|lower }}
+					{{ msg }}
 				</div>
 				{% endfor %}
 
@@ -85,8 +85,7 @@
 			</div>
 		</div>
 		<footer class="uk-position-bottom uk-section-primary uk-padding-small">
-			<div class="par">&copy; 2022 Structuretec</div>
-			<div class="par">Powered By AcForum</div>
+			<div class="par">&copy; 2023 Andrew Wheeler</div>
 		</footer>
 	</div>
 	{% block end %}

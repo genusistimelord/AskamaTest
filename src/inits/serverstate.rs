@@ -1,8 +1,10 @@
 #![allow(dead_code)]
 use crate::forms::{User, UserOnline, UserOnlineDisplay};
 use axum::{http::Request, middleware::Next, response::IntoResponse};
-use axum_sessions_auth::AuthSession;
+use axum_session::SessionPgPool;
+use axum_session_auth::AuthSession;
 use chrono::{DateTime, Duration, Utc};
+use sqlx::PgPool;
 use std::collections::HashMap;
 use std::sync::Arc;
 use tokio::sync::RwLock;
@@ -86,7 +88,7 @@ impl ServerState {
 pub async fn online_updater<B>(req: Request<B>, next: Next<B>) -> impl IntoResponse {
     let extensions = req.extensions();
     let state: &ServerState = extensions.get().expect("Could not load state");
-    let session: &AuthSession<User> = extensions.get().expect("Could not load user session");
+    let session: &AuthSession<User, i64, SessionPgPool, PgPool> = extensions.get().expect("Could not load user session");
 
     let timer = { *state.clean_timer.read().await };
 

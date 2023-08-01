@@ -7,6 +7,50 @@
 
 {% block content %}
 <form method="post" action="/user/login">
-	{% include "components/signin-card.html" %}
+	<div class="uk-card uk-card-default">
+		<div class="uk-card-header">
+			<span class="uk-card-title">
+				Sign in
+			</span>
+		</div>
+
+		<div class="uk-card-body">
+			<div uk-grid>
+				<input type="hidden" name="token" value="{{ token }}" />
+
+				<div class="uk-width-1-1">
+					<label for="name">USERNAME OR E-MAIL ADDRESS
+						<input type="text" name="name" id="name" value='{{ name }}' {% if
+							flashes.contains("name".into()) %} class="uk-input uk-alert error" {% else %}
+							class="uk-input" {% endif %} tabindex="1" /></label>
+
+					<!-- required -->
+				</div>
+
+				<div class="uk-width-1-1">
+					<label for="name">PASSWORD
+						<input type="password" name="password" id="password"
+							value='{{ password }}' {% if flashes.contains("password".into()) %}
+							class="uk-input uk-alert error" {% else %} class="uk-input" {% endif %}
+							tabindex="2" /></label>
+					<!-- required -->
+				</div>
+
+				<div class="uk-width-1-1" uk-grid>
+					<div class="uk-width-1-2">
+						<label for="remember_me">
+							Remember Me <input type="checkbox" class="uk-checkbox" name="remember_me" id="remember_me"
+								value='{{ remember_me }}' {% if remember_me==true %} checked {% endif %} tabindex="3" />
+						</label>
+					</div>
+
+					<div class="uk-width-1-2">
+						<input class="uk-button uk-button-primary
+								uk-align-right" type="submit" value="Sign In" tabindex="4" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </form>
 {% endblock content %}

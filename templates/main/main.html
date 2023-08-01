@@ -91,6 +91,21 @@
 	</div>
 </div>
 <div class="uk-margin-large-top">
-	{% include "components/who-is-online-card.html" %}
+	<div class="uk-card uk-card-default">
+		<div class="uk-card-header">
+			<span class="uk-card-title">
+				Who is Online
+			</span>
+		</div>
+		<div class="uk-card-body">
+			{% if !online.is_empty() %}
+			{% for online_user in online %}
+			{{ online_user.display }},
+			{% endfor %}
+			{% else %}
+			No One is Online.
+			{% endif %}
+		</div>
+	</div>
 </div>
 {% endblock content %}

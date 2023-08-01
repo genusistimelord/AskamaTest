@@ -3,11 +3,9 @@ use crate::{
     forms::User,
 };
 use askama::Template;
-use axum::{
-    http::StatusCode,
-    response::{IntoResponse, Response},
-};
-use axum_sessions_auth::Authentication;
+use axum::{http::StatusCode, response::IntoResponse};
+use axum_session_auth::Authentication;
+
 
 #[derive(Template, Default)]
 #[template(path = "error/404.htm")]
