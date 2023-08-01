@@ -7,15 +7,15 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug executable 'structuresite2'",
+            "name": "Debug executable 'test_site'",
             "cargo": {
                 "args": [
                     "build",
-                    "--bin=structuresite2",
-                    "--package=structuresite2"
+                    "--bin=test_site",
+                    "--package=test_site"
                 ],
                 "filter": {
-                    "name": "structuresite2",
+                    "name": "test_site",
                     "kind": "bin"
                 }
             },
@@ -25,16 +25,16 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug unit tests in executable 'structuresite2'",
+            "name": "Debug unit tests in executable 'test_site'",
             "cargo": {
                 "args": [
                     "test",
                     "--no-run",
-                    "--bin=structuresite2",
-                    "--package=structuresite2"
+                    "--bin=test_site",
+                    "--package=test_site"
                 ],
                 "filter": {
-                    "name": "structuresite2",
+                    "name": "test_site",
                     "kind": "bin"
                 }
             },
