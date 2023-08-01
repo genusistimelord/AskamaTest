@@ -6,7 +6,6 @@ use askama::Template;
 use axum::{http::StatusCode, response::IntoResponse};
 use axum_session_auth::Authentication;
 
-
 #[derive(Template, Default)]
 #[template(path = "error/404.htm")]
 struct Error404 {

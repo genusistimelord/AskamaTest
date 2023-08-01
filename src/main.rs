@@ -11,7 +11,7 @@ use axum_session::{SessionConfig, SessionLayer, SessionPgPool, SessionStore};
 use axum_session_auth::*;
 use sqlx::{
     postgres::{PgConnectOptions, PgPoolOptions},
-    ConnectOptions,PgPool
+    ConnectOptions, PgPool,
 };
 use std::{iter::once, net::SocketAddr};
 use tower_http::{
@@ -47,7 +47,7 @@ async fn main() {
     if std::env::var_os("RUST_LOG").is_none() {
         std::env::set_var("RUST_LOG", "example_templates=debug,tower_http=debug")
     }
-    
+
     //let subscriber = console_subscriber::init();
     let subscriber = tracing_subscriber::fmt()
         // Use a more compact, abbreviated log format
@@ -70,10 +70,10 @@ async fn main() {
     let database_key = Key::generate().master().to_vec();
     let poll = init_pool().await.unwrap();
     let session_config = SessionConfig::default()
-    .with_table_name("test_table")
-    .with_key(axum_session::Key::from(&key))
-    .with_database_key(axum_session::Key::from(&database_key))
-    .with_bloom_filter(true);
+        .with_table_name("test_table")
+        .with_key(axum_session::Key::from(&key))
+        .with_database_key(axum_session::Key::from(&database_key))
+        .with_bloom_filter(true);
     let csrfconfig = axum_csrf::CsrfConfig::default();
     let flash_config = Config::new(Key::from(&key)).use_secure_cookies(false);
     let session_store =
@@ -132,6 +132,7 @@ pub async fn init_pool() -> anyhow::Result<sqlx::Pool<sqlx::Postgres>> {
     connect_opts = connect_opts.port(5432);
 
     Ok(PgPoolOptions::new()
-    .max_connections(5)
-    .connect_with(connect_opts).await?)
+        .max_connections(5)
+        .connect_with(connect_opts)
+        .await?)
 }

@@ -1,4 +1,3 @@
-
 use async_trait::async_trait;
 use axum_session_auth::*;
 use serde::{Deserialize, Serialize};
@@ -25,7 +24,6 @@ pub struct User {
     pub tokens: HashSet<String>,
     pub groups: Vec<Group>,
 }
-
 
 impl Default for User {
     fn default() -> Self {
@@ -75,10 +73,7 @@ impl HasPermission<PgPool> for User {
 
 #[async_trait]
 impl Authentication<User, i64, PgPool> for User {
-    async fn load_user(
-        _userid: i64,
-        _pool: Option<&PgPool>,
-    ) -> Result<User, anyhow::Error> {
+    async fn load_user(_userid: i64, _pool: Option<&PgPool>) -> Result<User, anyhow::Error> {
         Ok(User::default())
     }
 

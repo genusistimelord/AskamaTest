@@ -2,7 +2,7 @@ use crate::{
     extensions::Flashes,
     forms::*,
     inits::{ServerState, SystemState},
-    models::{SqlUserEmail, SqlUser},
+    models::{SqlUser, SqlUserEmail},
 };
 use axum::{
     extract::Extension,
@@ -29,7 +29,7 @@ pub struct FullState {
     pub token: axum_csrf::CsrfToken,
 }
 
-// allows FullState to be called directly for handling into parts on its parts. 
+// allows FullState to be called directly for handling into parts on its parts.
 impl IntoResponseParts for FullState {
     type Error = Infallible;
 
