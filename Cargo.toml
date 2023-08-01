@@ -1,5 +1,5 @@
 [package]
-name = "structuresite2"
+name = "test_site"
 version = "0.1.0"
 authors = ["Andrew Wheeler <genusistimelord@gmail.com>"]
 edition = "2021"
@@ -38,7 +38,6 @@ rand = "0.8.5"
 axum_session = { version = "0.3.4" }
 axum_session_auth = { version = "0.3.0" }
 axum_csrf = { version = "0.7.2" }
-tower-cookies = "0.9.0"
 backtrace = "0.3.68"
 sqlx = { version = "0.7.1", features = [
     "macros",
