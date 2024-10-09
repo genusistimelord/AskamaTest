@@ -1,9 +1,12 @@
 #![allow(dead_code)]
 use crate::forms::{User, UserOnline, UserOnlineDisplay};
-use axum::{http::Request, middleware::Next, response::IntoResponse};
-use axum_session::SessionPgPool;
+use axum::extract::Request;
+use axum::middleware::Next;
+use axum::response::Response;
 use axum_session_auth::AuthSession;
+use axum_session_sqlx::SessionPgPool;
 use chrono::{DateTime, Duration, Utc};
+use hyper::StatusCode;
 use sqlx::PgPool;
 use std::collections::HashMap;
 use std::sync::Arc;
@@ -85,7 +88,7 @@ impl ServerState {
     }
 }
 
-pub async fn online_updater<B>(req: Request<B>, next: Next<B>) -> impl IntoResponse {
+pub async fn online_updater(req: Request, next: Next) -> Result<Response, StatusCode> {
     let extensions = req.extensions();
     let state: &ServerState = extensions.get().expect("Could not load state");
     let session: &AuthSession<User, i64, SessionPgPool, PgPool> =
@@ -102,5 +105,5 @@ pub async fn online_updater<B>(req: Request<B>, next: Next<B>) -> impl IntoRespo
         state.set_active(user).await
     }
 
-    next.run(req).await
+    Ok(next.run(req).await)
 }

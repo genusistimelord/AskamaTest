@@ -11,7 +11,8 @@ use axum::{
 };
 use axum_flash::Flash;
 use axum_macros::FromRequestParts;
-use axum_session_auth::{AuthSession, SessionPgPool};
+use axum_session_auth::AuthSession;
+use axum_session_sqlx::SessionPgPool;
 use sqlx::{PgPool, Row};
 use std::convert::Infallible;
 

@@ -7,46 +7,49 @@ resolver = "2"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-askama = { version = "0.12", features = [
+askama = { version = "0.12.1", features = [
     "serde-json",
     "with-axum",
 ] }
-axum = "0.6.19"
-axum-macros = "0.3.8"
-askama_axum = { version = "0.3.0" }
-serde = "1.0.180"
-serde_json = "1.0.104"
-anyhow = "1.0.72"
-toml = "0.7.6"
-chrono = { version = "0.4.26", features = ["clock", "serde", "std"] }
-bcrypt = "0.15.0"
-tokio = { version = "1.29.1", features = ["full"] }
-log = { version = "0.4.19", default-features = false }
-futures = "0.3.28"
-async-trait = "0.1.72"
-parking_lot = "0.12.1"
-tracing = "0.1.37"
-tracing-subscriber = { version = "0.3", features = ["env-filter"] }
-tower-http = { version = "0.4.3", features = ["full"] }
-axum-flash = "0.7.0"
-validator = { version = "0.16.1", features = ["derive"] }
-thiserror = "1.0.44"
-http-body = "0.4.5"
-async-recursion = "1.0.4"
-uuid = { version = "1.4.1", features = ["v4", "serde"] }
+axum = "0.7.7"
+axum-macros = "0.4.2"
+askama_axum = { version = "0.4.0" }
+serde = "1.0.210"
+serde_json = "1.0.128"
+anyhow = "1.0.89"
+toml = "0.8.19"
+chrono = { version = "0.4.38", features = ["clock", "serde", "std"] }
+bcrypt = "0.15.1"
+tokio = { version = "1.40.0", features = ["full"] }
+log = { version = "0.4.22", default-features = false }
+futures = "0.3.31"
+async-trait = "0.1.83"
+parking_lot = "0.12.3"
+tracing = "0.1.40"
+tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
+tower-http = { version = "0.6.1", features = ["full"] }
+axum-flash = "0.8.0"
+validator = { version = "0.18.1", features = ["derive"] }
+thiserror = "1.0.64"
+http-body = "1.0.1"
+async-recursion = "1.1.1"
+uuid = { version = "1.10.0", features = ["v4", "serde"] }
 rand = "0.8.5"
-axum_session = { version = "0.3.4" }
-axum_session_auth = { version = "0.3.0" }
-axum_csrf = { version = "0.7.2" }
-backtrace = "0.3.68"
-sqlx = { version = "0.7.1", features = [
+axum_session = { version = "0.14.2" }
+axum_session_auth = { version = "0.14.1" }
+axum_csrf = { version = "0.10.0" }
+backtrace = "0.3.74"
+sqlx = { version = "0.8.2", features = [
     "macros",
     "postgres",
     "sqlite",
     "_unstable-all-types",
-    "runtime-tokio-rustls",
+    "runtime-tokio",
+    "tls-rustls"
 ] }
-env_logger = "0.10.0"
-tower-redis = "0.2.0"
-regex = "1.9.1"
-http = "0.2.9"
+env_logger = "0.11.5"
+tower-redis = "0.3.0"
+regex = "1.11.0"
+http = "1.1.0"
+axum_session_sqlx = { version = "0.3.0", features = [ "postgres", "tls-rustls"] }
+hyper = "1.0.1"

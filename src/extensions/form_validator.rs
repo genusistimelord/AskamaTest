@@ -1,7 +1,6 @@
 use axum::{
-    body::BoxBody,
-    http::{Response, StatusCode},
-    response::IntoResponse,
+    http::StatusCode,
+    response::{IntoResponse, Response},
 };
 use axum_session::SessionError;
 use thiserror::Error;
@@ -43,7 +42,7 @@ pub enum ServerError {
 }
 
 impl IntoResponse for ServerError {
-    fn into_response(self) -> Response<self::BoxBody> {
+    fn into_response(self) -> Response {
         match self {
             ServerError::ValidationError(_) => {
                 let message = format!("Input validation error: [{}]", self).replace('\n', ", ");

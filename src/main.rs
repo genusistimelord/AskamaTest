@@ -6,14 +6,17 @@ use axum::{
     routing::{get, get_service},
     Router,
 };
+use axum_flash::Config;
 use axum_flash::Key;
-use axum_session::{SessionConfig, SessionLayer, SessionPgPool, SessionStore};
+use axum_session::{SessionConfig, SessionLayer, SessionStore};
 use axum_session_auth::*;
+use axum_session_sqlx::SessionPgPool;
 use sqlx::{
     postgres::{PgConnectOptions, PgPoolOptions},
     ConnectOptions, PgPool,
 };
 use std::{iter::once, net::SocketAddr};
+use tokio::net::TcpListener;
 use tower_http::{
     catch_panic::CatchPanicLayer,
     compression::CompressionLayer,
@@ -22,8 +25,6 @@ use tower_http::{
     services::ServeDir,
     trace::TraceLayer,
 };
-
-use axum_flash::Config;
 
 #[macro_use]
 extern crate log;
@@ -83,8 +84,6 @@ async fn main() {
     let server_state = ServerState::new().await;
     let auth_config = AuthConfig::<i64>::default().with_anonymous_user_id(Some(1));
 
-    //todo: change this to be doen via a cli runner.
-    session_store.initiate().await.unwrap();
     let system_state = SystemState::new(flash_config, csrfconfig);
 
     // build our application with some routes
@@ -110,12 +109,17 @@ async fn main() {
         .with_state(system_state);
 
     // run it
+    // run it
     let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
+
     debug!("listening on {}", addr);
-    axum::Server::bind(&addr)
-        .serve(app.into_make_service())
-        .await
-        .unwrap();
+    let listener = TcpListener::bind(addr).await.unwrap();
+    axum::serve(
+        listener,
+        app.into_make_service_with_connect_info::<SocketAddr>(),
+    )
+    .await
+    .unwrap();
 }
 
 async fn root() -> impl IntoResponse {
